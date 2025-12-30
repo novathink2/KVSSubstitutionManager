@@ -49,7 +49,7 @@ export async function generateSubstitutions(request: SubstitutionRequest): Promi
   }
 
   const model = genAI.getGenerativeModel({ 
-    model: 'gemini-1.5-pro',
+    model: 'gemini-1.5-flash',
   });
 
   const prompt = `You are an AI assistant for a school substitution management system. Your task is to generate optimal teacher substitutions.
@@ -113,7 +113,7 @@ export async function* streamChatResponse(message: string, conversationHistory: 
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const systemInstruction = `You are a helpful AI assistant for the KVS AI Substitution Manager application. 
 You help users understand how to use the application, answer questions about teacher substitutions, timetables, and school management.
