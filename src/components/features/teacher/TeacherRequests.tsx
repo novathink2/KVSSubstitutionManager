@@ -1,0 +1,172 @@
+import { useState, useEffect } from 'react';
+import { User, Request, RequestType } from '@/types';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { addRequest, getRequestsByTeacher } from '@/lib/api';
+import { generateId } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
+import { Send } from 'lucide-react';
+
+interface TeacherRequestsProps {
+  user: User;
+}
+
+export default function TeacherRequests({ user }: TeacherRequestsProps) {
+  const [requestType, setRequestType] = useState<RequestType>('INTERCHANGE');
+  const [details, setDetails] = useState('');
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    loadRequests();
+  }, [user.id]);
+
+  const loadRequests = async () => {
+    try {
+      const data = await getRequestsByTeacher(user.id);
+      setRequests(data);
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to load requests.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!details.trim()) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please provide request details.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const request: Request = {
+        id: generateId(),
+        teacherId: user.id,
+        teacherName: user.name,
+        type: requestType,
+        details: details.trim(),
+        status: 'PENDING',
+        createdAt: new Date().toISOString(),
+      };
+
+      await addRequest(request);
+      await loadRequests();
+      setDetails('');
+
+      toast({
+        title: 'Request Sent',
+        description: 'Your request has been sent to the admin.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to send request.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'APPROVED':
+        return 'text-status-active';
+      case 'REJECTED':
+        return 'text-status-absent';
+      default:
+        return 'text-status-pending';
+    }
+  };
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6">
+      {/* Send Request */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Send className="w-5 h-5 text-primary" />
+            <CardTitle>Send Request to Admin</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="requestType">Request Type</Label>
+            <Select value={requestType} onValueChange={(value) => setRequestType(value as RequestType)} disabled={loading}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="INTERCHANGE">Class Interchange</SelectItem>
+                <SelectItem value="EXTRA_CLASS">Extra Class</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="details">Details</Label>
+            <Textarea
+              id="details"
+              placeholder="e.g., 'Can I swap my 3rd period with Mrs. X?' or 'I am free in 5th period if needed.'"
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+              rows={6}
+              disabled={loading}
+            />
+          </div>
+
+          <Button onClick={handleSubmit} className="w-full" disabled={loading}>
+            {loading ? 'Sending...' : 'Send Request'}
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* My Requests */}
+      <Card>
+        <CardHeader>
+          <CardTitle>My Requests</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {requests.length === 0 ? (
+            <p className="text-muted-foreground italic">No pending requests.</p>
+          ) : (
+            <div className="space-y-3">
+              {requests.map((request) => (
+                <div
+                  key={request.id}
+                  className="p-4 border border-border rounded-lg hover:bg-accent/50 transition-colors"
+                >
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <p className="font-semibold text-foreground">
+                        {request.type === 'INTERCHANGE' ? 'Class Interchange' : 'Extra Class'}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(request.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <span className={`text-sm font-semibold uppercase ${getStatusColor(request.status)}`}>
+                      {request.status}
+                    </span>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{request.details}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
