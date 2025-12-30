@@ -113,7 +113,7 @@ export async function* streamChatResponse(message: string, conversationHistory: 
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro' });
 
     const systemInstruction = `You are a helpful AI assistant for the KVS AI Substitution Manager application. 
 You help users understand how to use the application, answer questions about teacher substitutions, timetables, and school management.
