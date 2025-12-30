@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
-import { streamChatResponse } from '@/lib/gemini';
+import { chatResponse } from '@/lib/gemini';
 import { ChatMessage } from '@/types';
 
 export default function ChatBot() {
@@ -45,18 +45,16 @@ export default function ChatBot() {
         content: m.content,
       }));
 
-      let fullContent = '';
-      for await (const chunk of streamChatResponse(userMessage.content, history)) {
-        fullContent += chunk;
-        setMessages(prev => {
-          const newMessages = [...prev];
-          newMessages[newMessages.length - 1] = {
-            ...assistantMessage,
-            content: fullContent,
-          };
-          return newMessages;
-        });
-      }
+      const response = await chatResponse(userMessage.content, history);
+      
+      setMessages(prev => {
+        const newMessages = [...prev];
+        newMessages[newMessages.length - 1] = {
+          ...assistantMessage,
+          content: response,
+        };
+        return newMessages;
+      });
     } catch (error: any) {
       console.error('Chat error:', error);
       let errorMessage = 'Sorry, I encountered an error.';
