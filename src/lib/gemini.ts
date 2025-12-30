@@ -49,7 +49,7 @@ export async function generateSubstitutions(request: SubstitutionRequest): Promi
   }
 
   const model = genAI.getGenerativeModel({ 
-    model: 'model: 'gemini-1.5-pro',
+    model: 'gemini-1.5-pro',
   });
 
   const prompt = `You are an AI assistant for a school substitution management system. Your task is to generate optimal teacher substitutions.
