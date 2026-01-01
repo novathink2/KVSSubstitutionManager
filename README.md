@@ -17,6 +17,7 @@ An intelligent school management web application designed for Kendriya Vidyalaya
 - **💬 Real-time Chat Assistant**: AI-powered help system (optional)
 - **📱 Responsive Design**: Works seamlessly on desktop and mobile
 - **🖼️ Profile Pictures**: Upload and manage teacher profile photos
+- **🤖 Script Bot**: AI-powered help system for user guidance
 - **🔒 Secure**: Row-level security with Supabase
 
 ## Tech Stack
@@ -84,7 +85,7 @@ See [STORAGE_GUIDE.md](./STORAGE_GUIDE.md) for detailed storage architecture.
 - Apply for leaves (full day or partial)
 - View personal timetable (editable)
 - Submit interchange/extra class requests
-- Upload profile picture
+- Upload and manage profile picture
 - Update profile information
 - View school announcements
 - Track request status (pending/approved/rejected)
@@ -120,16 +121,30 @@ The system automatically generates unique employee codes for contractual teacher
 
 See [CONTRACTUAL_TEACHERS.md](./CONTRACTUAL_TEACHERS.md) for complete documentation.
 
-### Optional: AI Chat Assistant
+### Optional: Script Bot AI Assistant
 
-Google Gemini AI is used for the chat assistant feature:
+Google Gemini AI is used for the Script Bot feature:
 - Help users understand the application
 - Answer questions about features
 - Provide guidance on using the system
+- Accessible from any page via floating button
 
 ## Made By
 
 Students of PM SHRI KV PATTOM-2
+
+---
+
+## Additional Documentation
+
+- **[SUBSTITUTION_ALGORITHM.md](./SUBSTITUTION_ALGORITHM.md)**: Detailed documentation of the smart substitution algorithm
+- **[CONTRACTUAL_TEACHERS.md](./CONTRACTUAL_TEACHERS.md)**: Guide for managing contractual teachers
+- **[STORAGE_GUIDE.md](./STORAGE_GUIDE.md)**: File storage architecture and best practices
+- **[PROFILE_PICTURE_GUIDE.md](./PROFILE_PICTURE_GUIDE.md)**: How to upload and manage profile pictures
+- **[SCRIPT_BOT_GUIDE.md](./SCRIPT_BOT_GUIDE.md)**: AI assistant chatbot documentation
+- **[MULTI_SCHOOL_GUIDE.md](./MULTI_SCHOOL_GUIDE.md)**: Multi-school support guide
+- **[PRIMARY_SECONDARY_GUIDE.md](./PRIMARY_SECONDARY_GUIDE.md)**: Primary vs secondary class management
+- **[TEACHER_DATA_IMPORT.md](./TEACHER_DATA_IMPORT.md)**: Bulk teacher import instructions
 
 ---
 

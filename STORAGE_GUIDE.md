@@ -65,8 +65,14 @@ Supabase Storage buckets for file management:
 - **Purpose**: Teacher and admin profile photos
 - **Access**: 
   - Anyone can view (public bucket)
-  - Authenticated users can upload/update/delete
+  - Authenticated users can upload/update/delete their own photos
 - **Naming**: `{userId}-{timestamp}.{ext}`
+- **Features**:
+  - Automatic image optimization
+  - Circular display in profile header
+  - Upload button with camera icon overlay
+  - File size validation (max 5MB)
+  - Image type validation
 
 ### 2. **leave-documents** *(Private)*
 - **Max Size**: 10 MB

@@ -6,7 +6,7 @@ import AuthPage from '@/pages/AuthPage';
 import TeacherDashboard from '@/pages/TeacherDashboard';
 import AdminDashboard from '@/pages/AdminDashboard';
 import Navbar from '@/components/layout/Navbar';
-import ChatBot from '@/components/features/ChatBot';
+import ScriptBot from '@/components/features/ScriptBot';
 
 function App() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
@@ -47,7 +47,7 @@ function App() {
       ) : (
         <AdminDashboard user={currentUser!} />
       )}
-      <ChatBot />
+      <ScriptBot />
     </div>
   );
 }

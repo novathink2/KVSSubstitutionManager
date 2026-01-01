@@ -3,7 +3,7 @@ import { MessageCircle, X, Send } from 'lucide-react';
 import { chatResponse } from '@/lib/gemini';
 import { ChatMessage } from '@/types';
 
-export default function ChatBot() {
+export default function ScriptBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
@@ -99,7 +99,7 @@ export default function ChatBot() {
           <div className="flex items-center justify-between p-4 border-b border-border bg-primary text-primary-foreground rounded-t-lg">
             <div className="flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
-              <h3 className="font-semibold">AI Assistant</h3>
+<h3 className="font-semibold">Script Bot</h3>
             </div>
             <button
               onClick={() => setIsOpen(false)}
@@ -113,7 +113,7 @@ export default function ChatBot() {
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.length === 0 && (
               <div className="text-center text-muted-foreground text-sm py-8">
-                <p>Hello! I'm your AI assistant.</p>
+                <p>Hello! I'm your Script Bot.</p>
                 <p className="mt-2">Ask me anything about the KVS Substitution Manager!</p>
               </div>
             )}
