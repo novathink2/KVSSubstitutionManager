@@ -54,8 +54,7 @@ export default function TeacherRequests({ user }: TeacherRequestsProps) {
         teacherName: user.name,
         type: requestType,
         details: details.trim(),
-        status: 'PENDING',
-        createdAt: new Date().toISOString(),
+        status: 'PENDING' as const,
       };
 
       await addRequest(request);

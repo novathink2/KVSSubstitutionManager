@@ -58,7 +58,6 @@ export default function TeacherLeaves({ user }: TeacherLeavesProps) {
         date,
         type,
         reason: reason.trim(),
-        createdAt: new Date().toISOString(),
       };
 
       await addLeave(leave);
